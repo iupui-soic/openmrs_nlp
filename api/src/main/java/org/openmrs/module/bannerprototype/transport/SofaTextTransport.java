@@ -1,17 +1,22 @@
 package org.openmrs.module.bannerprototype.transport;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.Concept;
+import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.bannerprototype.SofaDocument;
 import org.openmrs.module.bannerprototype.SofaText;
 import org.openmrs.module.bannerprototype.SofaTextMention;
 import org.openmrs.module.bannerprototype.api.NLPService;
+import org.openmrs.module.bannerprototype.nlp.DocumentTagger;
 
 import banner.tagging.Mention;
 
@@ -58,7 +63,9 @@ public class SofaTextTransport implements Serializable, Comparable {
 	}
 	
 	public void addMentionAndConcepts(Mention m, List<Concept> concepts) {
+		//System.out.println("Mention Text: " + m.getText());
 		for (SofaTextMentionTransport stm : sofaTextMention) {
+			//System.out.println("STM: " + stm.getMentionText());
 			
 			if (stm.getMentionText().toLowerCase().indexOf(m.getText().toLowerCase()) != -1) {
 				//stm.addConcepts(concepts);
@@ -67,8 +74,11 @@ public class SofaTextTransport implements Serializable, Comparable {
 			if (m.getText().toLowerCase().indexOf(stm.getMentionText().toLowerCase()) != -1) {
 				//concepts.addAll(stm.getConcepts());
 				sofaTextMention.remove(stm);
+				//System.out.println("removed");
 			}
+			
 		}
+		
 		sofaTextMention.add(new SofaTextMentionTransport(this, m, concepts));
 	}
 	

@@ -6,11 +6,10 @@ import java.util.List;
 
 import org.openmrs.Concept;
 import banner.Sentence;
+//import banner.tagging.CRFTagger;
 import banner.tokenization.Tokenizer;
 import banner.tagging.Mention;
 import com.sfsu.bannertrain.train.CRFTagger;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * this is a wrapper class for the BANNER CRF tagger
@@ -18,8 +17,6 @@ import org.apache.commons.logging.LogFactory;
  * @author ryaneshleman
  */
 public class NERTagger implements Serializable {
-	
-	private static final Log log = LogFactory.getLog(NERTagger.class);
 	
 	CRFTagger tagger;
 	
@@ -32,7 +29,7 @@ public class NERTagger implements Serializable {
 	ArrayList<NamedEntity> namedEntities;
 	
 	public NERTagger() {
-		log.info("getting Tagger");
+		System.out.println("getting Tagger");
 		tagger = TaggerFactory.getTagger();
 		
 		taggerName = TaggerFactory.getTaggerName();
@@ -53,7 +50,7 @@ public class NERTagger implements Serializable {
 	public ArrayList<NamedEntity> tag(String sofa) {
 		// if the global configuration has changed since tagger was initialized
 		if (TaggerFactory.isNewtaggerRequired(taggerName)) {
-			log.info("New Tagger Required");
+			System.out.println("New Tagger Required");
 			tagger = TaggerFactory.getTagger();
 			taggerName = TaggerFactory.getTaggerName();
 		}
@@ -67,7 +64,7 @@ public class NERTagger implements Serializable {
 		tokenizer.tokenize(sentence);
 		
 		//perform CRF tagging
-		log.info("Tagging Sentence with BANNER");
+		System.out.println("Tagging Sentence with BANNER");
 		tagger.tag(sentence);
 		
 		mentions.addAll(sentence.getMentions());

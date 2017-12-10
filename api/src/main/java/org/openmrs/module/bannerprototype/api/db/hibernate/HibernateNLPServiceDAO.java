@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -40,17 +41,14 @@ public class HibernateNLPServiceDAO implements NLPServiceDAO {
 	public SofaDocument saveSofaDocument(SofaDocument sofaDocument) {
 		sessionFactory.getCurrentSession().flush();
 		sessionFactory.getCurrentSession().saveOrUpdate(sofaDocument);
-		for (SofaText st : sofaDocument.getSofaText()) {
+		for (SofaText st : sofaDocument.getSofaText())
 			saveSofaText(st);
-		}
+		
 		return sofaDocument;
 	}
 	
 	/**
 	 * Save SofaText as well as all children SofaTextMention objects
-	 * 
-	 * @param sofaText
-	 * @return
 	 */
 	@Override
 	public SofaText saveSofaText(SofaText sofaText) {
@@ -113,16 +111,15 @@ public class HibernateNLPServiceDAO implements NLPServiceDAO {
 	/**
 	 * this method is a hack because I couldn't quickly figure out how to get hibernate to do this
 	 * for me. it eagerly queries all fields required to fully populate a SofaDocument.
-	 * 
-	 * @param sofaDocumentId
-	 * @return
 	 */
-	@Override
 	public SofaDocument getSofaDocumentById(int sofaDocumentId) {
+		
 		//SofaDocument sofaDocument = (SofaDocument) session.get(SofaDocument.class, sofaDocumentId);
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(SofaDocument.class);
 		crit.add(Restrictions.eq("sofaDocumentId", sofaDocumentId));
 		SofaDocument sofaDocument = (SofaDocument) crit.uniqueResult();
+		
+		Hibernate.initialize(sofaDocument);
 		
 		return sofaDocument;
 	}
@@ -152,11 +149,12 @@ public class HibernateNLPServiceDAO implements NLPServiceDAO {
 	@Override
 	public void truncateNLPTables() {
 		Session s = sessionFactory.getCurrentSession();
+		
 		List<SofaDocument> sds = getAllSofaDocuments();
 		
-		for (SofaDocument sd : sds) {
+		for (SofaDocument sd : sds)
 			s.delete(sd);
-		}
+		
 		return;
 	}
 	

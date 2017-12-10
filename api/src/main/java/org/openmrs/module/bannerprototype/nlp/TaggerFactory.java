@@ -12,8 +12,6 @@ import org.springframework.core.io.ClassPathResource;
 import banner.tokenization.Tokenizer;
 import banner.tokenization.WhitespaceTokenizer;
 import com.sfsu.bannertrain.train.CRFTagger;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * This class is used to instantiate the BANNER CRFTagger object.
@@ -21,8 +19,6 @@ import org.apache.commons.logging.LogFactory;
  * @author ryaneshleman
  */
 public class TaggerFactory {
-	
-	private static final Log log = LogFactory.getLog(TaggerFactory.class);
 	
 	private static CRFTagger tagger = null;
 	
@@ -93,11 +89,12 @@ public class TaggerFactory {
 			
 		}
 		catch (IOException e1) {
-			log.error("could not find serialized tagger");
+			
+			System.out.println(("could not find serialized tagger"));
 			e1.printStackTrace();
 		}
 		catch (ClassNotFoundException e) {
-			log.error("could not deserialized tagger ");
+			System.out.println("could not deserialized tagger/n ");
 			e.printStackTrace();
 		}
 		return null;
