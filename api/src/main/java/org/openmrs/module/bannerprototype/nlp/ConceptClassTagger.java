@@ -138,8 +138,8 @@ public class ConceptClassTagger implements Serializable {
 			if (lower_str.charAt(i) == ' ' && lower_str.charAt(i - 1) != ' ')
 				token_index++;
 		
-		log.debug(name);
-		log.debug("TOKEN INDEX: " + token_index);
+		log.info(name);
+		log.info("TOKEN INDEX: " + token_index);
 		
 		Sentence s = new Sentence(str);
 		tokenizer.tokenize(s);

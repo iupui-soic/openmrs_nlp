@@ -28,7 +28,7 @@ public class VisitNoteAdvice implements MethodBeforeAdvice {
 	
 	@Override
 	public void before(Method method, Object[] args, Object arg2) throws Throwable {
-		log.debug("Tagging Document");
+		log.info("Tagging Document");
 		
 		// if "saveEncounter" was called
 		if (method != null && method.getName().equals("saveEncounter")) {
