@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.openmrs.BaseOpenmrsData;
 import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.Concept;
 
@@ -16,7 +17,7 @@ import banner.tagging.Mention;
  * 
  * @author ryaneshleman
  */
-public class SofaTextMention extends BaseOpenmrsObject implements Serializable, Comparable {
+public class SofaTextMention extends BaseOpenmrsData implements Serializable, Comparable {
 	
 	private int sofaTextMentionId;
 	
@@ -225,6 +226,22 @@ public class SofaTextMention extends BaseOpenmrsObject implements Serializable, 
 	@Override
 	public int compareTo(Object stm) {
 		return this.getMentionStart() - ((SofaTextMention) stm).getMentionStart();
+	}
+	
+	/**
+	 * uuid is a unique identifier for the SofaTextMention
+	 * 
+	 * @return the uuid
+	 */
+	public String getUuid() {
+		return uuid;
+	}
+	
+	/**
+	 * @param uuid the uuid to set
+	 */
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 	
 }

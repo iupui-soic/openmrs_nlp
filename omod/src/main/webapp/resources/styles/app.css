@@ -1,0 +1,277 @@
+.center {
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 1px solid grey;
+  padding: 10px;
+  padding-bottom: 30px;
+  border-radius: 15px;
+}
+
+article{
+  padding:20px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.ui-rangeSlider-bar{
+  background: #009384;
+}
+
+#slider{
+  font-size: 10px;
+}
+
+#entityTypes {
+  margin-left: 100px;
+}
+
+#dropdownpage1 {
+  float: right;
+  margin-right: 100px;
+  margin-bottom: 5px;
+}
+
+#numTermsDropdownMenu {
+    width: 50px;
+}
+
+#cloud {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#cloudborder{
+  margin-left: 25px;
+  margin-right: 25px;
+  border: 1px solid grey;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.searchbottom {
+  margin-top: 15px;
+  margin-left: 175px;
+}
+
+.container{
+  width: 980px;
+}
+
+.searchtop {
+  margin-left: 140px;
+  width: 500px;
+}
+
+.dates{
+  margin-top: 5px;
+  margin-bottom: 10px;
+  margin-left: 140px;
+  margin-right: -15px;
+}
+
+.nomargin{
+  margin-top: 0px;
+}
+
+.pad{
+  padding-left: 0px;
+  padding-right: 0px;	
+}
+
+.breadcrumb{
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+#resetHeatMap{
+  float: right;
+  margin-right: 20px;
+}
+
+#resetVisitList{
+  margin-top: 10px;
+  margin-right: 20px;
+  float: right;
+}
+
+#clearHistory {
+  float: left;
+  margin-bottom: 5px;
+}
+
+#backButton {
+  float: right;
+  margin-bottom: 5px;
+}
+
+#report-problem{
+   font-size:14px;
+   float: right;
+   margin-top: 10px;
+}
+
+.inner{
+   display: inline-block;
+ }
+
+rect.bar {
+  stroke: #E6E6E6;
+  stroke-width:2px;
+}
+
+h6 {
+  background-color: #eceeef;
+}
+
+#visit-note-list {
+  border: 1px solid grey;
+  border-radius: 15px;
+  padding: 10px;
+  float: left;
+  height: 550px;
+}
+
+#visit-note-rendering {
+  border: 1px solid grey;
+  border-radius: 15px;
+  padding: 10px;
+  float: right;
+  height: 550px;
+}
+
+.highlighted-mention{
+	background-color: rgb(157, 198, 245);
+}
+
+.tabHeading{
+  margin-top: 10px;
+}
+
+.text{
+   font-size: 1em;
+   margin: 10px;
+   margin-left: 15px;
+}
+
+.render{
+  font-size:14px;
+  height: 370px;
+  overflow-y: scroll;
+  margin-top: 10px;
+}
+
+.visitListInput{
+  margin: 10px;
+  margin-left: 0px;
+}
+
+.pag{
+  float: right;
+  margin: 10px;
+}
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; } /*for ui bootstrap*/
+
+.dropdownpage2 {
+  margin-bottom: 20px;
+}
+
+p{
+  font-size:14px;
+}
+
+table{
+  font-size:14px;
+}
+
+.problem {
+  fill: purple
+}
+.treatment {
+  fill: green;
+}
+.test {
+  fill: blue;
+}
+
+span.cloud-problem {
+  margin: 10px;
+  margin-left:0px;
+  color: purple
+}
+
+span.cloud-test {
+  margin: 10px;
+  margin-left:0px;
+  color: blue /*rgb(17, 76, 126)*/
+}
+
+span.cloud-treatment {
+  margin: 10px;
+  margin-left:0px;
+  color: green /*rgb(33, 119, 67)*/
+}
+
+.table > tbody > tr.selectedNote {
+  background-color: rgb(176,224,230);
+}
+
+span.mention-type-problem {
+  color: purple
+}
+
+span.mention-type-test {
+  color: blue /*rgb(17, 76, 126)*/
+}
+
+span.mention-type-treatment {
+  color: green /*rgb(33, 119, 67)*/
+}
+
+.hide {
+  visibility: hidden;
+}
+.show{
+  visibility: visible;
+}
+.g_main {
+  cursor:pointer;
+  pointer-events: all;
+}
+
+#heatmapdir {
+  margin-top: 5px;
+  margin-bottom: 1px;
+}
+
+#reset{
+  float: right;
+}
+
+div.tooltip {
+  position: absolute;
+  max-width: 200px;
+  height: auto;
+  padding: 5px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none; /* VERY IMPORTANT! */
+  font-size:12px;
+}
+
+#heatmapsection {
+  margin-top: 5px;
+  margin-left: -15px;
+  margin-right: -15px;
+  margin-bottom: 0px;
+  border: 1px solid grey;
+  padding: 10px;
+  padding-left: 40px;
+  border-radius: 15px;
+}
+
+.legendtext {
+  font-size:12px;
+}

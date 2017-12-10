@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.openmrs.BaseOpenmrsData;
 import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
@@ -20,7 +21,7 @@ import org.openmrs.Patient;
  * 
  * @author ryaneshleman
  */
-public class SofaDocument extends BaseOpenmrsObject implements Serializable {
+public class SofaDocument extends BaseOpenmrsData implements Serializable {
 	
 	private int sofaDocumentId;
 	
@@ -149,8 +150,8 @@ public class SofaDocument extends BaseOpenmrsObject implements Serializable {
 	}
 	
 	/**
-	 * Helper method to generate HTML for controller. This method will be moved to the controller
-	 * class in the
+	 * Helper method to generate HTML to render on the UI. Each mention in the SofaDocument is given
+	 * a unique id. startIndex is the ID for the first mention in a SofaText.
 	 * 
 	 * @return the annotatedHTML
 	 */
@@ -164,9 +165,11 @@ public class SofaDocument extends BaseOpenmrsObject implements Serializable {
 		List<SofaText> sortedSofaTexts = new ArrayList<SofaText>(sofaText);
 		Collections.sort(sortedSofaTexts);
 		
+		int startIndex = 0;
 		for (SofaText st : sortedSofaTexts) {
 			
-			out.append(st.getAnnotatedHTML());
+			out.append(st.getAnnotatedHTML(startIndex));
+			startIndex += st.getSofaTextMention().size();
 		}
 		
 		return new String(out);
@@ -267,6 +270,22 @@ public class SofaDocument extends BaseOpenmrsObject implements Serializable {
 		}
 		
 		return mentions;
+	}
+	
+	/**
+	 * uuid is a unique identifier for the SofaDocument
+	 * 
+	 * @return the uuid
+	 */
+	public String getUuid() {
+		return uuid;
+	}
+	
+	/**
+	 * @param uuid the uuid to set
+	 */
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 	
 }

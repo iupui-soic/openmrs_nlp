@@ -13,6 +13,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.bannerprototype.SofaDocument;
 import org.openmrs.module.bannerprototype.api.NLPService;
 import org.openmrs.module.bannerprototype.nlp.DocumentTagger;
+import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.MethodBeforeAdvice;
 
 /**
@@ -20,26 +21,27 @@ import org.springframework.aop.MethodBeforeAdvice;
  * 
  * @author ryaneshleman
  */
-public class VisitNoteAdvice implements MethodBeforeAdvice {
+public class VisitNoteAdvice implements AfterReturningAdvice {
 	
 	DocumentTagger dt = new DocumentTagger();
 	
 	Log log = LogFactory.getLog(getClass());
 	
 	@Override
-	public void before(Method method, Object[] args, Object arg2) throws Throwable {
+	public void afterReturning(Object returnValue, Method method, Object[] args, Object arg2) throws Throwable {
 		log.info("Tagging Document");
 		
 		// if "saveEncounter" was called
 		if (method != null && method.getName().equals("saveEncounter")) {
 			
 			//get observations from Encounter object
-			Set<Obs> obs = ((Encounter) args[0]).getAllObs();
+			Encounter e = (Encounter) returnValue;
+			Set<Obs> obs = (e).getAllObs();
 			
 			//get VisitNote concept
 			Concept c = null;
 			String noteConceptId = Context.getAdministrationService().getGlobalProperty("bannerprototype.noteConceptId");
-			if (noteConceptId != null || !noteConceptId.isEmpty()) {
+			if (noteConceptId != null && !noteConceptId.isEmpty()) {
 				c = Context.getConceptService().getConcept(Integer.parseInt(noteConceptId));
 			} else {
 				c = Context.getConceptService().getConcept("Text of encounter note");
@@ -56,11 +58,11 @@ public class VisitNoteAdvice implements MethodBeforeAdvice {
 					
 					SofaDocument sofaDocument = dt.tagDocument(sofa);
 					sofaDocument.setPatient(p);
+					sofaDocument.setEncounter(e);
 					
 					Context.getService(NLPService.class).saveSofaDocument(sofaDocument);
 				}
 			}
 		}
 	}
-	
 }

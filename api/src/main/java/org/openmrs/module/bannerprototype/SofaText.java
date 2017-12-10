@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.openmrs.BaseOpenmrsData;
 import org.openmrs.BaseOpenmrsObject;
 import org.openmrs.Concept;
 import org.openmrs.Encounter;
@@ -19,7 +20,7 @@ import banner.tagging.Mention;
  * 
  * @author ryaneshleman
  */
-public class SofaText extends BaseOpenmrsObject implements Serializable, Comparable {
+public class SofaText extends BaseOpenmrsData implements Serializable, Comparable {
 	
 	private int sofaTextId;
 	
@@ -120,7 +121,7 @@ public class SofaText extends BaseOpenmrsObject implements Serializable, Compara
 			}
 			
 		}
-		//add mention to SofaText 
+		//add mention to SofaText
 		sofaTextMention.add(new SofaTextMention(this, m, new ArrayList<Concept>()));
 		return true;
 		
@@ -243,37 +244,42 @@ public class SofaText extends BaseOpenmrsObject implements Serializable, Compara
 	}
 	
 	/**
-	 * Helper method to generate HTML, will be moved to controller in future, the html contains the
-	 * text of the SofaText object with each mention wrapped in a span tag
+	 * Helper method to generate HTML. The html contains the text of the SofaText object with each
+	 * mention wrapped in a span tag. Each mention in the SofaDocument is given a unique ID.
+	 * startIndex is the ID for the first mention in this SofaText.
 	 * 
+	 * @param startIndex ID for the first mention in this SofaText
 	 * @return
 	 */
-	public String getAnnotatedHTML() {
+	public String getAnnotatedHTML(int startIndex) {
 		String html = new String(text);
 		String tagged;
-		for (SofaTextMention m : sofaTextMention) {
-			tagged = wrapInMentionTypeTag(m.getMentionText(), m.getMentionType());
-			//System.out.println(tagged);
+		List<SofaTextMention> sofaTextMentionList = new ArrayList<SofaTextMention>();
+		sofaTextMentionList.addAll(sofaTextMention);
+		Collections.sort(sofaTextMentionList);
+		
+		for (SofaTextMention m : sofaTextMentionList) {
+			tagged = wrapInMentionTypeTag(m.getMentionText(), m.getMentionType(), startIndex);
 			
-			if (!m.getSofaTextMentionConcept().isEmpty())
+			if (!m.getSofaTextMentionConcept().isEmpty()) {
 				tagged = wrapInConceptTag(tagged, m);
+			}
 			
 			html = html.replace(m.getMentionText(), tagged);
-			//html = html.replaceAll("\\n", "<br/>");
+			startIndex++;
 		}
 		return html;
 	}
 	
 	private String wrapInConceptTag(String tagged, SofaTextMention m) {
 		SofaTextMentionConcept c = (SofaTextMentionConcept) m.getSofaTextMentionConcept().toArray()[0];
-		return String.format("<a href=/openmrs/dictionary/concept.htm?conceptId=%d>%s</a>", c.getConcept().getConceptId(),
-		    tagged);
+		return String.format("<a href=/OPENMRS_CONTEXT_PATH/dictionary/concept.htm?conceptId=%d>%s</a>", c.getConcept()
+		        .getConceptId(), tagged);
 	}
 	
-	private String wrapInMentionTypeTag(String mentionText, String mentionType) {
-		
-		return String.format("<span class=\"mention-type-%s\">%s</span>", mentionType, mentionText);
-		
+	private String wrapInMentionTypeTag(String mentionText, String mentionType, int startIndex) {
+		return String.format("<span id=\"visit-note-span-%d\" class=\"mention-type-%s\">%s</span>", startIndex, mentionType,
+		    mentionText);
 	}
 	
 	/**
